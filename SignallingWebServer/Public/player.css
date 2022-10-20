@@ -1,18 +1,28 @@
 /*Copyright Epic Games, Inc. All Rights Reserved.*/
 :root {
 	/*Using colour scheme https://color.adobe.com/TD-Colors---Option-3-color-theme-10394433/*/
-	--colour1:#000000;
+	--colour1:#021e40;
 	--colour2:#FFFFFF;
 	--colour3:#0585fe;
 	--colour4:#35b350;
 	--colour5:#ffab00;
 	--colour6:#1e1d22;
 	--colour7:#3c3b40;
+
+
+/*	--colour1:#000000;
+	--colour2:#FFFFFF;
+	--colour3:#0585fe;
+	--colour4:#35b350;
+	--colour5:#ffab00;
+	--colour6:#1e1d22;
+	--colour7:#3c3b40;
+*/
 }
 
 body{
     margin: 0px;
-    background-color: black;
+	background-color: #021e40;
 	font-family: 'Montserrat', sans-serif;
 }	
 
@@ -36,7 +46,7 @@ video {
 	width: 100%;
 	height: 100%;
 	position: absolute;
-	background-color: #000;
+	background-color: #021e40;
 }
 
 #videoPlayOverlay{
@@ -75,9 +85,15 @@ video {
 }
 
 img#playButton{
-	max-width: 241px;
-	width: 10%;
+	max-width: 1024px;
+	width: 50%;
 }
+
+img#splash{
+	max-width: 1024px;
+	width: 50%;
+}
+
 
 #freezeFrameOverlay {
 	background-color: transparent;
@@ -128,8 +144,8 @@ img#playButton{
 }
 
 #overlay img {
-	width: 100%;
-	height: 100%;
+	width: 50%;
+	height: 50%;
 }
 
 .tooltip .tooltiptext {

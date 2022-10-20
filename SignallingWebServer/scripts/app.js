@@ -986,9 +986,10 @@ function setOverlay(htmlClass, htmlElement, onClickFunction) {
 }
 
 function showConnectOverlay() {
-    let startText = document.createElement('div');
+    let startText = document.createElement('img');
     startText.id = 'playButton';
-    startText.innerHTML = 'Click to start'.toUpperCase();
+  //  startText.innerHTML = 'Click to start'.toUpperCase();
+    startText.src = '/images/ScaleWorld_ConnectSplash.svg';
 
     setOverlay('clickableState', startText, event => {
         connect();
@@ -1037,8 +1038,10 @@ function playVideo() {
 
 function showPlayOverlay() {
     let img = document.createElement('img');
-    img.id = 'playButton';
-    img.src = '/images/Play.png';
+    img.id = 'splash';
+    //img.id = 'playButton';
+    //img.src = '/images/Play.png';
+    img.src = '/images/ScaleWorld_EnterSplash.svg';
     img.alt = 'Start Streaming';
     setOverlay('clickableState', img, event => {
         playStream();
@@ -1583,13 +1586,16 @@ const ControlSchemeType = {
 
     // A mouse can hover over the WebRTC player so the user needs to click and
     // drag to control the orientation of the camera.
-    HoveringMouse: 1
+    HoveringMouse: 1,
+
+    NoControl: 2
 };
 
 let inputOptions = {
     // The control scheme controls the behaviour of the mouse when it interacts
     // with the WebRTC player.
-    controlScheme: ControlSchemeType.LockedMouse,
+    controlScheme: ControlSchemeType.NoControl,
+    //controlScheme: ControlSchemeType.LockedMouse,
 
     // Browser keys are those which are typically used by the browser UI. We
     // usually want to suppress these to allow, for example, UE to show shader
@@ -2637,6 +2643,7 @@ function onConfig(config) {
     let playerDiv = document.getElementById('player');
     let playerElement = setupWebRtcPlayer(playerDiv, config);
     resizePlayerStyle();
+
     registerMouse(playerElement);
 }
 
@@ -2650,6 +2657,8 @@ function registerMouse(playerElement) {
             break;
         case ControlSchemeType.LockedMouse:
             registerLockedMouseEvents(playerElement);
+            break;
+        case ControlSchemeType.NoControl:
             break;
         default:
             registerLockedMouseEvents(playerElement);
@@ -2743,13 +2752,20 @@ function closeStream() {
     }
 }
 
-function load() {
+function load(hasControl) {
+    isPresenter = hasControl;
     parseURLParams();
-    setupHtmlEvents();
+
+    if(isPresenter)
+    {
+        inputOptions.controlScheme = ControlSchemeType.HoveringMouse;
+        setupHtmlEvents();
+        registerKeyboardEvents();
+    }
+    else{inputOptions.controlScheme = ControlSchemeType.NoControl;}
     registerMessageHandlers();
     populateDefaultProtocol();
     setupFreezeFrameOverlay();
-    registerKeyboardEvents();
     // Example response event listener that logs to console
     addResponseEventListener('logListener', (response) => {console.log(`Received response message from streamer: "${response}"`)})
     start(false);
